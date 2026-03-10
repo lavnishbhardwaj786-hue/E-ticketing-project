@@ -8,6 +8,8 @@ from app.models.user import User
 from app.schemas.user import UserCreate, UserLogin, UserOut
 from app.core.security import hash_password, verify_password, create_access_token
 from app.api.deps_auth import get_current_user
+from fastapi import Request
+from app.services.logging_service import log_user_activity
 
 
 router = APIRouter(prefix="/auth", tags=["Auth"])
@@ -36,7 +38,8 @@ def register(user: UserCreate, db: Session = Depends(get_db)):
 
 
 @router.post("/login")
-def login(
+async def login(
+    request: Request,
     form_data: OAuth2PasswordRequestForm = Depends(),
     db: Session = Depends(get_db),
 ):
@@ -46,6 +49,15 @@ def login(
         raise HTTPException(status_code=401, detail="Invalid credentials")
 
     token = create_access_token({"sub": db_user.username})
+    
+    # Log login
+    await log_user_activity(
+        user_id=db_user.id,
+        action_type="login",
+        description=f"User {db_user.username} logged in",
+        ip_address=request.client.host if request.client else None
+    )
+    
     return {"access_token": token, "token_type": "bearer"}
 
 

@@ -5,6 +5,7 @@ from app.api.deps import get_db
 from app.api.deps_auth import get_current_user
 from app.models.airline import Airline
 from app.schemas.airline import AirlineCreate, AirlineUpdate, AirlineOut
+from app.api.deps_auth import get_admin_user
 
 router = APIRouter(prefix="/airlines", tags=["Airlines"])
 
@@ -12,7 +13,7 @@ router = APIRouter(prefix="/airlines", tags=["Airlines"])
 def create_airline(
     data: AirlineCreate,
     db: Session = Depends(get_db),
-    user = Depends(get_current_user),
+    user = Depends(get_admin_user),
 ):
     existing = db.query(Airline).filter(
         (Airline.name == data.name) | (Airline.code == data.code)
