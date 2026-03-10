@@ -11,13 +11,13 @@ function Firstpageelement() {
             </div>
 
             
-            <nav className="bg-white/10 p-4 rounded-2xl backdrop-blur-2g">
+            <nav className="bg-white/20 p-4 rounded-2xl backdrop-blur-1g hover:scale-95 transition duration-300">
                 <ul className="flex items-center justify-between gap-4">
                     <li className="flex flex-row">
                         <div>
                         <MapPin className="text-gray-800" size={20} />
                         </div>
-                        <div lassName="flex flex-col"> 
+                        <div className="flex flex-col"> 
                         <span className="text-xs uppercase opacity-70">from</span>
                         <h6 className="font-semibold">pick the location</h6>
                         </div>
@@ -26,7 +26,7 @@ function Firstpageelement() {
                         <div>
                         <MapPin className="text-gray-800" size={20} />
                         </div>
-                        <div lassName="flex flex-col"> 
+                        <div className="flex flex-col"> 
                         <span className="text-xs uppercase opacity-70">to</span>
                         <h6 className="font-semibold">pick the location</h6>
                         </div>
@@ -35,7 +35,7 @@ function Firstpageelement() {
                         <div>
                         <Calendar className="text-gray-800" size={20} />
                         </div>
-                        <div lassName="flex flex-col"> 
+                        <div className="flex flex-col"> 
                         <span className="text-xs uppercase opacity-70">departure</span>
                         <h6 className="font-semibold">pick the date</h6>
                         </div>
@@ -44,7 +44,7 @@ function Firstpageelement() {
                         <div>
                         <Calendar className="text-gray-800" size={20} />
                         </div>
-                        <div lassName="flex flex-col"> 
+                        <div className="flex flex-col"> 
                         <span className="text-xs uppercase opacity-70">return</span>
                         <h6 className="font-semibold">pick the date</h6>
                         </div>
