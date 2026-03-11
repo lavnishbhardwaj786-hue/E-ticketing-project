@@ -4,6 +4,10 @@
   padding: 0rem;
   text-align: center;
 }
+body {
+  margin: 0;
+  overflow-x: hidden;
+}
 
 .logo {
   height: 6em;

@@ -1,63 +1,67 @@
-import { Link } from "react-router-dom"
-import { MapPin, Calendar, Search } from 'lucide-react';
+import { MapPin, Calendar, Search } from "lucide-react"
+
 function Firstpageelement() {
     return (
-        <div className="flex-1 flex flex-col justify-between p-8"> 
-            <div>
-                <h1 className="text-3xl text-right font-bold">your ticket to <br/>explore the world</h1>
-                <p className="text-right mt-4 ml-auto max-w-md mb-7"> 
-                    Discover the world at your fingertips. Our flight booking service opens doors to global destinations, making travel dreams a reality with convenience and ease.
+        <div className="w-full flex flex-col items-end justify-between p-8 text-white h-full">
+
+            {/* Text Section */}
+            <div className="text-right max-w-md">
+                <h1 className="text-3xl font-bold">
+                    your ticket to <br /> explore the world
+                </h1>
+
+                <p className="mt-4 mb-7">
+                    Discover the world at your fingertips. Our flight booking service opens doors to global destinations.
                 </p>
             </div>
 
-            
-            <nav className="bg-white/20 p-4 rounded-2xl backdrop-blur-1g hover:scale-95 transition duration-300">
-                <ul className="flex items-center justify-between gap-4">
-                    <li className="flex flex-row">
-                        <div>
-                        <MapPin className="text-gray-800" size={20} />
-                        </div>
-                        <div className="flex flex-col"> 
-                        <span className="text-xs uppercase opacity-70">from</span>
-                        <h6 className="font-semibold">pick the location</h6>
-                        </div>
-                    </li>
-                    <li className="flex flex-row">
-                        <div>
-                        <MapPin className="text-gray-800" size={20} />
-                        </div>
-                        <div className="flex flex-col"> 
-                        <span className="text-xs uppercase opacity-70">to</span>
-                        <h6 className="font-semibold">pick the location</h6>
+            {/* Search Bar */}
+            <nav className="bg-white/20 p-4 rounded-2xl backdrop-blur-lg hover:scale-95 transition duration-300">
+                <ul className="flex items-center gap-6">
+
+                    <li className="flex items-center">
+                        <MapPin size={20}/>
+                        <div className="flex flex-col ml-2">
+                            <span className="text-xs uppercase opacity-70">from</span>
+                            <h6 className="font-semibold">pick the location</h6>
                         </div>
                     </li>
-                    <li className="flex flex-row">
-                        <div>
-                        <Calendar className="text-gray-800" size={20} />
-                        </div>
-                        <div className="flex flex-col"> 
-                        <span className="text-xs uppercase opacity-70">departure</span>
-                        <h6 className="font-semibold">pick the date</h6>
-                        </div>
-                    </li>
-                    <li className="flex flex-row">
-                        <div>
-                        <Calendar className="text-gray-800" size={20} />
-                        </div>
-                        <div className="flex flex-col"> 
-                        <span className="text-xs uppercase opacity-70">return</span>
-                        <h6 className="font-semibold">pick the date</h6>
+
+                    <li className="flex items-center">
+                        <MapPin size={20}/>
+                        <div className="flex flex-col ml-2">
+                            <span className="text-xs uppercase opacity-70">to</span>
+                            <h6 className="font-semibold">pick the location</h6>
                         </div>
                     </li>
-                    
+
+                    <li className="flex items-center">
+                        <Calendar size={20}/>
+                        <div className="flex flex-col ml-2">
+                            <span className="text-xs uppercase opacity-70">departure</span>
+                            <h6 className="font-semibold">pick the date</h6>
+                        </div>
+                    </li>
+
+                    <li className="flex items-center">
+                        <Calendar size={20}/>
+                        <div className="flex flex-col ml-2">
+                            <span className="text-xs uppercase opacity-70">return</span>
+                            <h6 className="font-semibold">pick the date</h6>
+                        </div>
+                    </li>
+
                     <li>
-                        <button className="bg-blue-700 rounded-xl h-12 w-12 flex items-center justify-center hover:bg-blue-800 transition-colors">
-                            <Search color="#FFFFFF" size={24} />
+                        <button className="bg-blue-700 rounded-xl h-12 w-12 flex items-center justify-center hover:bg-blue-800">
+                            <Search size={24} color="white"/>
                         </button>
                     </li>
+
                 </ul>
             </nav>
+
         </div>
     )
 }
+
 export default Firstpageelement

@@ -1,77 +1,59 @@
-import { useState } from "react";
-import Commonelement from "../services/formdata-render";
-import Logindata from "../utility/form-data";
-import { Link, useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
-import { authAPI } from "../services/api.js";
+import { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { authAPI } from '../services/api';
 
 function Login() {
-    const [formdata, setformdata] = useState({ name: "", password: "" });
-    const [error, setError] = useState("");
-    const navigate = useNavigate();
+  const [formdata, setformdata] = useState({ username: '', password: '' });
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
-    async function buttonhandle(e) {
-        e.preventDefault();
-        setError("");
-        try {
-            const res = await authAPI.login(formdata.name, formdata.password);
-            if (res.data?.token) {
-                localStorage.setItem("token", res.data.token);
-                navigate("/");
-            }
-        } catch (err) {
-            setError(err.response?.data?.detail || "Login failed. Try again.");
-        }
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setError('');
+    try {
+      const { data } = await authAPI.login(formdata.username, formdata.password);
+      navigate("/");
+      localStorage.setItem('token', data.access_token);
+      window.dispatchEvent(new Event('storage'));
+      // window.location.href = '/';
+    } catch (err) {
+      setError('Invalid credentials');
     }
+  }
 
-    return (
-        <div 
-            className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-cover bg-center"
-            style={{ backgroundImage: `url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=2074')` }}
-        >
-            {/* INTENSE ZOOM CONTAINER */}
-            <motion.div 
-                initial={{ opacity: 0, scale: 0.3, y: 100, filter: "blur(10px)" }} // Starts tiny, blurred, and low
-                animate={{ opacity: 1, scale: 1, y: 0, filter: "blur(0px)" }}    // Zooms aggressively forward
-                transition={{ 
-                    duration: 0.8, 
-                    type: "spring", // Using spring for a more "fabulous" bounce
-                    stiffness: 100,
-                    damping: 15
-                }}
-                className="relative z-20 bg-white/10 backdrop-blur-xl rounded-2xl p-10 shadow-[0_20px_50px_rgba(0,0,0,0.3)] w-full max-w-md border border-white/20"
-            >
-                <h1 className="text-4xl font-bold text-center text-black mb-2 tracking-tighter">Login</h1>
-                <p className="text-black/50 text-center mb-8 text-sm uppercase tracking-widest">Air Link Portal</p>
-                
-                <form className="flex flex-col space-y-6 items-center" onSubmit={buttonhandle}>
-                    {error && <p className="text-red-600 text-sm">{error}</p>}
-                    <div className="w-full">
-                        <Commonelement 
-                            data={Logindata} 
-                            setformdata={setformdata} 
-                            formdata={formdata} 
-                        />
-                    </div>
-                    
-                    <Link to={'/register'} className="text-blue-800 hover:text-black transition-colors text-xs underline underline-offset-4">
-                        Don't have an account? Register here.
-                    </Link>
-                    
-                    <motion.button 
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        type="submit" 
-                        className="w-full bg-white text-blue-600 font-black py-4 px-6 rounded-2xl hover:bg-blue-500 hover:text-white transition-all shadow-lg uppercase tracking-wider"
-                    >
-                        Submit
-                    </motion.button>
-                </form>
-            </motion.div>
-
-            <div className="absolute top-1/3 left-1/4 w-64 h-64 bg-blue-400/20 rounded-full blur-[100px] animate-pulse" />
-        </div>
-    );
+  return (
+    <div
+      className="min-h-screen flex items-center justify-center bg-cover bg-center"
+      style={{ backgroundImage: `url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=2074')` }}
+    >
+      <div className="bg-white/20 backdrop-blur-lg p-8 rounded-2xl border border-white/30 w-96">
+        <h2 className="text-3xl font-bold text-white mb-6">Login</h2>
+        {error && <p className="text-red-300 mb-4">{error}</p>}
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            placeholder="Username"
+            value={formdata.username}
+            onChange={(e) => setformdata({...formdata, username: e.target.value})}
+            className="w-full p-3 mb-4 rounded-lg bg-white/10 border border-white/30 text-white placeholder-white/60"
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={formdata.password}
+            onChange={(e) => setformdata({...formdata, password: e.target.value})}
+            className="w-full p-3 mb-6 rounded-lg bg-white/10 border border-white/30 text-white placeholder-white/60"
+          />
+          <button className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700">
+            Login
+          </button>
+        </form>
+        <p className="text-white/80 mt-4 text-center">
+          Don't have an account? <Link to="/register" className="underline">Register</Link>
+        </p>
+      </div>
+    </div>
+  );
 }
 
 export default Login;
