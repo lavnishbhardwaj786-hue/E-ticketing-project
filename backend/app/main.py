@@ -24,7 +24,7 @@ app.add_middleware(
         "http://127.0.0.1:5173",
         "http://localhost:3000",  # If you have other frontend ports
         # OR use "*" for development (not recommended for production)
-        "https://69b46b787cf2093cb63e2a43--gleaming-salamander-d885e4.netlify.app/"
+        "https://69b46b787cf2093cb63e2a43--gleaming-salamander-d885e4.netlify.app"
     ],
     allow_credentials=True,
     allow_methods=["*"],  # Allows all HTTP methods (GET, POST, PUT, DELETE, etc.)
