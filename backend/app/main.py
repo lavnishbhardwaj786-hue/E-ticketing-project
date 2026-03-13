@@ -7,6 +7,7 @@ from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.httpsredirect import HTTPSRedirectMiddleware
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -16,7 +17,7 @@ async def lifespan(app: FastAPI):
 
 limiter = Limiter(key_func=get_remote_address)
 
-app = FastAPI(title="Airplane E‑Ticketing API", lifespan=lifespan)
+app = FastAPI(title="Airplane E‑Ticketing API", lifespan=lifespan, redirect_slashes=False)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
