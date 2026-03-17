@@ -299,7 +299,7 @@ function Search() {
                 {/* Book */}
                 <div className="flex justify-end">
                   <button
-                    onClick={() => navigate(`/booking/${f.id}`)}
+                    onClick={() => navigate(`/booking/${f.id}`, { state: { price: f.base_price_economy } })}
                     className="w-full md:w-auto bg-blue-600 text-white font-black px-6 py-3 rounded-2xl hover:bg-blue-500 transition-all shadow-lg active:scale-95 uppercase tracking-widest text-xs"
                   >
                     Select
