@@ -25,6 +25,11 @@ class BookingOut(BaseModel):
     status: str
     booking_time: datetime
     issued_time: datetime | None
+    # Add these:
+    origin_iata: str | None = None
+    destination_iata: str | None = None
+    flight_number: str | None = None
+    airline_name: str | None = None
 
     class Config:
         from_attributes = True
