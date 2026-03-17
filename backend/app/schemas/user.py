@@ -20,3 +20,18 @@ class UserCreate(BaseModel):
         if not re.search(r'\d', v):
             raise ValueError('Password must contain digit')
         return v
+
+
+class UserLogin(BaseModel):
+    username: str
+    password: str
+
+
+class UserOut(BaseModel):
+    id: int
+    name: str
+    email: EmailStr
+    username: str
+
+    class Config:
+        from_attributes = True
