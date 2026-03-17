@@ -27,11 +27,11 @@ function Search() {
       try {
         const today = new Date().toISOString().split("T")[0]
 
-        const apRes = await fetch(`${BASE}/api/v1/airports`)
+        const apRes = await fetch(`${BASE}/api/v1/airports/`)
         const aps = await apRes.json()
         setAirports(Array.isArray(aps) ? aps : [])
 
-        const routesRes = await fetch(`${BASE}/api/v1/routes`)
+        const routesRes = await fetch(`${BASE}/api/v1/routes/`)
         const routes = await routesRes.json()
 
         const flightPromises = routes.map(r => {
