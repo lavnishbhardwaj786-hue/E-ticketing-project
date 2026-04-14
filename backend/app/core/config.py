@@ -8,7 +8,7 @@ MONGODB_DB_NAME = os.getenv("MONGODB_DB_NAME", "eticketing_logs")
 
 DATABASE_URL = os.getenv(
     "DATABASE_URL",
-    "mysql+pymysql://eticket:password123@localhost/eticketing"
+    "postgresql://user:password@localhost/eticketing"
 )
 
 SECRET_KEY = os.getenv("SECRET_KEY", "dev-secret-key-CHANGE-IN-PRODUCTION")
