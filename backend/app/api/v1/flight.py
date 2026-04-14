@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
+from sqlalchemy import func
 from sqlalchemy.orm import Session
 from datetime import datetime, timedelta
 
@@ -86,22 +87,39 @@ def search_flights(
     if not origin or not destination:
         raise HTTPException(status_code=404, detail="Airport not found")
 
-    # Get routes matching origin/destination
-    routes = db.query(Route).filter(
-        Route.source_airport_id == origin.id,
-        Route.destination_airport_id == destination.id
-    ).all()
-
-    if not routes:
-        return []  # No routes available
-
-    route_ids = [r.id for r in routes]
-
     # Build flight query
-    query = db.query(Flight).filter(
-        Flight.route_id.in_(route_ids),
-        Flight.departure_time >= search_date,
-        Flight.departure_time < search_date + timedelta(days=1),
+    query = (
+        db.query(
+            Flight.id,
+            Flight.flight_number,
+            Flight.departure_time,
+            Flight.arrival_time,
+            Flight.base_price_economy,
+            Flight.base_price_business,
+            Flight.base_price_first,
+            Flight.airline_id,
+            Flight.aircraft_id,
+            func.count(Booking.id).label("booked_count"),
+        )
+        .join(Route, Route.id == Flight.route_id)
+        .outerjoin(Booking, Booking.flight_id == Flight.id)
+        .filter(
+            Route.source_airport_id == origin.id,
+            Route.destination_airport_id == destination.id,
+            Flight.departure_time >= search_date,
+            Flight.departure_time < search_date + timedelta(days=1),
+        )
+        .group_by(
+            Flight.id,
+            Flight.flight_number,
+            Flight.departure_time,
+            Flight.arrival_time,
+            Flight.base_price_economy,
+            Flight.base_price_business,
+            Flight.base_price_first,
+            Flight.airline_id,
+            Flight.aircraft_id,
+        )
     )
 
     # Apply time window filter
@@ -131,15 +149,23 @@ def search_flights(
         query = query.filter(Flight.base_price_economy <= max_price)
 
     flights = query.all()
+    if not flights:
+        return []
 
-    # Build results with joined data
-    results = []
-    for flight in flights:
-        # Count booked seats
-        booked_count = db.query(Booking).filter(Booking.flight_id == flight.id).count()
-        available_seats = flight.aircraft.total_capacity - booked_count
+    airline_ids = {flight.airline_id for flight in flights}
+    aircraft_ids = {flight.aircraft_id for flight in flights}
 
-        results.append({
+    airlines = {
+        airline.id: airline
+        for airline in db.query(Airline).filter(Airline.id.in_(airline_ids)).all()
+    }
+    aircraft = {
+        plane.id: plane
+        for plane in db.query(Aircraft).filter(Aircraft.id.in_(aircraft_ids)).all()
+    }
+
+    return [
+        {
             "id": flight.id,
             "flight_number": flight.flight_number,
             "departure_time": flight.departure_time,
@@ -147,17 +173,18 @@ def search_flights(
             "base_price_economy": float(flight.base_price_economy),
             "base_price_business": float(flight.base_price_business) if flight.base_price_business else None,
             "base_price_first": float(flight.base_price_first) if flight.base_price_first else None,
-            "available_seats": available_seats,
-            "airline_name": flight.airline.name,
-            "airline_code": flight.airline.code,
-            "aircraft_model": flight.aircraft.model,
+            "available_seats": aircraft[flight.aircraft_id].total_capacity - flight.booked_count,
+            "airline_name": airlines[flight.airline_id].name,
+            "airline_code": airlines[flight.airline_id].code,
+            "aircraft_model": aircraft[flight.aircraft_id].model,
             "origin_city": origin.city,
             "origin_iata": origin.iata_code,
             "destination_city": destination.city,
             "destination_iata": destination.iata_code,
-        })
-
-    return results
+        }
+        for flight in flights
+        if flight.airline_id in airlines and flight.aircraft_id in aircraft
+    ]
 
 
 @router.get("/{flight_id}/seats")
