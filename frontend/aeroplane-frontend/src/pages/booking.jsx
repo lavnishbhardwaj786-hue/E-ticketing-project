@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { useParams, useNavigate, useLocation } from "react-router-dom"
 import bg from "../assets/frontpage.png"
 import { flightAPI, bookingAPI } from "../services/api"
+import { useWebSocket } from "../hooks/useWebSocket"
 
 function Booking() {
   const { flightId } = useParams()
@@ -27,6 +28,22 @@ function Booking() {
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState("")
   const [successList, setSuccessList] = useState([])  // all booking results
+  const { seatUpdates, connected } = useWebSocket(flightId)
+
+  // Refresh seat data when WebSocket updates are received
+  useEffect(() => {
+    if (seatUpdates.length > 0) {
+      const refreshSeats = async () => {
+        try {
+          const { data } = await flightAPI.getSeats(flightId)
+          setFlightData(data)
+        } catch (e) {
+          console.error('Failed to refresh seat data:', e)
+        }
+      }
+      refreshSeats()
+    }
+  }, [seatUpdates, flightId])
 
   useEffect(() => {
     const load = async () => {
@@ -179,9 +196,17 @@ function Booking() {
           <div className="flex-1">
             <h1 className="text-white text-2xl font-black">Select Your Seats</h1>
             {flightData && (
-              <p className="text-white/50 text-sm">
-                {flightData.flight_number} · {flightData.aircraft_model} · {flightData.booked_seats}/{flightData.total_capacity} booked
-              </p>
+              <div className="flex items-center gap-3">
+                <p className="text-white/50 text-sm">
+                  {flightData.flight_number} · {flightData.aircraft_model} · {flightData.booked_seats}/{flightData.total_capacity} booked
+                </p>
+                {connected && (
+                  <div className="flex items-center gap-1 bg-green-500/20 border border-green-400/40 rounded-full px-2 py-1">
+                    <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+                    <span className="text-green-300 text-xs font-bold">Live</span>
+                  </div>
+                )}
+              </div>
             )}
           </div>
           {/* Selected count badge */}
