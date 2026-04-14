@@ -8,16 +8,46 @@ function MyBookings() {
   const [bookings, setBookings] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
+  const [cancellingId, setCancellingId] = useState(null)
 
-  useEffect(() => {
-    const token = localStorage.getItem("token")
-    if (!token) { navigate("/login"); return }
-
+  const fetchBookings = () => {
+    setLoading(true)
     bookingAPI.getMyBookings()
       .then(res => setBookings(Array.isArray(res.data) ? res.data : []))
       .catch(e => setError(e.response?.data?.detail || "Failed to load bookings."))
       .finally(() => setLoading(false))
+  }
+
+  useEffect(() => {
+    const token = localStorage.getItem("token")
+    if (!token) { navigate("/login"); return }
+    fetchBookings()
   }, [])
+
+  const handleCancel = async (bookingId) => {
+    if (!window.confirm("Are you sure you want to cancel this booking? You will receive a full refund.")) return
+    
+    setCancellingId(bookingId)
+    try {
+      // 1. Get payments for this booking
+      const paymentsRes = await bookingAPI.getBookingPayments(bookingId)
+      const successfulPayment = paymentsRes.data.find(p => p.status === "success")
+      
+      if (!successfulPayment) {
+        alert("No successful payment found for this booking.")
+        return
+      }
+
+      // 2. Refund the payment
+      await bookingAPI.cancelBooking(successfulPayment.id)
+      alert("Booking cancelled and refund processed successfully!")
+      fetchBookings()
+    } catch (err) {
+      alert(err.response?.data?.detail || "Failed to cancel booking.")
+    } finally {
+      setCancellingId(null)
+    }
+  }
 
   return (
     <div
@@ -87,15 +117,26 @@ function MyBookings() {
                     </div>
                   </div>
 
-                  {/* Status badge */}
-                  <div className={`px-3 py-1 rounded-full text-xs font-black border ${
-                    b.status?.toLowerCase() === "confirmed"
-                      ? "bg-green-500/20 border-green-400/40 text-green-300"
-                      : b.status?.toLowerCase() === "cancelled"
-                      ? "bg-red-500/20 border-red-400/40 text-red-300"
-                      : "bg-yellow-500/20 border-yellow-400/40 text-yellow-300"
-                  }`}>
-                    {b.status?.toUpperCase() ?? "PENDING"}
+                  {/* Status and Actions */}
+                  <div className="flex flex-col items-end gap-2">
+                    <div className={`px-3 py-1 rounded-full text-xs font-black border ${
+                      b.status?.toLowerCase() === "confirmed"
+                        ? "bg-green-500/20 border-green-400/40 text-green-300"
+                        : b.status?.toLowerCase() === "cancelled"
+                        ? "bg-red-500/20 border-red-400/40 text-red-300"
+                        : "bg-yellow-500/20 border-yellow-400/40 text-yellow-300"
+                    }`}>
+                      {b.status?.toUpperCase() ?? "PENDING"}
+                    </div>
+                    {b.status?.toLowerCase() === "confirmed" && (
+                      <button
+                        onClick={() => handleCancel(b.id)}
+                        disabled={cancellingId === b.id}
+                        className="text-xs text-red-400 hover:text-red-300 font-bold underline transition-colors disabled:opacity-50"
+                      >
+                        {cancellingId === b.id ? "Cancelling..." : "Cancel Booking"}
+                      </button>
+                    )}
                   </div>
                 </div>
 
