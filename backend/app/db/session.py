@@ -1,4 +1,5 @@
 from sqlalchemy import create_engine
+from sqlalchemy.pool import NullPool
 from sqlalchemy.orm import sessionmaker
 from app.core.config import DATABASE_URL
 
@@ -6,11 +7,8 @@ from app.core.config import DATABASE_URL
 engine = create_engine(
     DATABASE_URL,
     pool_pre_ping=True,
-    pool_size=3,
-    max_overflow=2,
-    pool_timeout=30,
     pool_recycle=1800,
-    pool_use_lifo=True,
+    poolclass=NullPool,
 )
 
 # Create DB session factory
