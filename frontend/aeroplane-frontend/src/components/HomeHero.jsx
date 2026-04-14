@@ -77,13 +77,15 @@ function Firstpageelement() {
   const [airports, setAirports] = useState([])
   const [from, setFrom] = useState("")
   const [to, setTo] = useState("")
+  const [date, setDate] = useState("")
 
   useEffect(() => {
     api.get("/airports/").then(res => setAirports(res.data)).catch(() => {})
   }, [])
 
   const handleSearch = () => {
-    if (from && to) navigate(`/search?from=${from}&to=${to}`)
+    if (from && to && date) navigate(`/search?from=${from}&to=${to}&date=${date}`)
+    else if (from && to) navigate(`/search?from=${from}&to=${to}`)
     else navigate("/search")
   }
 
@@ -99,6 +101,20 @@ function Firstpageelement() {
         <li className="w-px h-8 bg-white/20 shrink-0" />
 
         <LocationPicker label="to" value={to} onChange={setTo} airports={airports} />
+
+        <li className="w-px h-8 bg-white/20 shrink-0" />
+
+        <li className="flex items-center">
+          <div className="flex flex-col">
+            <span className="text-xs uppercase opacity-60 tracking-widest">date</span>
+            <input
+              type="date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+              className="bg-transparent text-white text-sm outline-none [color-scheme:dark]"
+            />
+          </div>
+        </li>
 
         <li>
           <button

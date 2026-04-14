@@ -15,6 +15,7 @@ function Search() {
   const [displayed, setDisplayed] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searching, setSearching] = useState(false);
+  const [hasSearched, setHasSearched] = useState(false);
   const [error, setError] = useState("");
 
   const [from, setFrom] = useState(searchParams.get("from") || "");
@@ -73,11 +74,13 @@ function Search() {
     if (!from || !to || !date) {
       setError("Choose origin, destination, and date to search flights.");
       setDisplayed([]);
+      setHasSearched(false);
       return;
     }
 
     setSearching(true);
     setError("");
+    setHasSearched(true);
 
     try {
       const { data } = await flightAPI.search({
@@ -105,6 +108,7 @@ function Search() {
     setDate("");
     setDisplayed([]);
     setError("");
+    setHasSearched(false);
   };
 
   return (
@@ -322,6 +326,15 @@ function Search() {
                 </div>
               </div>
             ))
+          ) : hasSearched ? (
+            <div className="text-center py-20 bg-black/20 rounded-3xl border border-dashed border-white/20">
+              <p className="text-white font-bold text-xl">
+                No flights found for {from} to {to} on {date}.
+              </p>
+              <p className="text-white/50 mt-2 text-sm">
+                Try another date or a different route.
+              </p>
+            </div>
           ) : (
             <div className="text-center py-20 bg-black/20 rounded-3xl border border-dashed border-white/20">
               <p className="text-white font-bold text-xl">
