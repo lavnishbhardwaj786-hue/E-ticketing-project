@@ -5,6 +5,7 @@ import Register from "./pages/register"
 import Search from "./pages/search"
 import Booking from "./pages/booking"
 import MyBookings from "./pages/my-bookings"
+import AdminDashboard from "./pages/admin-dashboard"
 import About from "./pages/about"
 import Features from "./pages/features"
 
@@ -17,6 +18,7 @@ function App() {
       <Route path="/search" element={<Search />} />
       <Route path="/booking/:flightId" element={<Booking />} />
       <Route path="/my-bookings" element={<MyBookings />} />
+      <Route path="/admin" element={<AdminDashboard />} />
       <Route path="/about" element={<About />} />
       <Route path="/features" element={<Features />} />
     </Routes>
