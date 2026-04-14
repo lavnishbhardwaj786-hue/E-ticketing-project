@@ -22,7 +22,14 @@ app = FastAPI(title="Airplane E‑Ticketing API", lifespan=lifespan, redirect_sl
 
 # Configure CORS for production
 # In development, allow localhost; in production, restrict to specific frontend domain
-allowed_origins = os.getenv("ALLOWED_ORIGINS", "http://localhost:3000,http://localhost:5173").split(",")
+allowed_origins = [
+    origin.strip()
+    for origin in os.getenv(
+        "ALLOWED_ORIGINS",
+        "http://localhost:3000,http://localhost:5173",
+    ).split(",")
+    if origin.strip()
+]
 
 app.add_middleware(
     CORSMiddleware,
