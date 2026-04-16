@@ -5,7 +5,7 @@ function About() {
   const navigate = useNavigate()
   return (
     <div
-      className="h-screen w-screen overflow-hidden bg-cover bg-center flex items-center justify-center relative"
+      className="min-h-screen w-screen overflow-hidden bg-cover bg-center flex items-center justify-center relative"
       style={{ backgroundImage: `url(${bg})` }}
     >
       <div className="absolute inset-0 bg-black/55" />

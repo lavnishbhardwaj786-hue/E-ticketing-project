@@ -118,18 +118,18 @@ function Search() {
     >
       <div className="absolute inset-0 bg-black/40 pointer-events-none" />
 
-      <div className="w-full max-w-6xl h-full bg-black/20 backdrop-blur-2xl border border-white/20 rounded-[40px] shadow-2xl p-6 md:p-8 flex flex-col relative z-10 overflow-hidden mt-4 mb-4">
-        <div className="flex flex-col md:flex-row gap-4 items-center mb-6 shrink-0">
+      <div className="w-full max-w-6xl max-h-[calc(100vh-32px)] bg-black/20 backdrop-blur-2xl border border-white/20 rounded-2xl md:rounded-[40px] shadow-2xl p-3 sm:p-6 md:p-8 flex flex-col relative z-10 overflow-hidden my-4">
+        <div className="flex flex-col gap-2 sm:gap-4 items-start sm:items-center mb-4 sm:mb-6 shrink-0">
           <button
             onClick={() => navigate("/")}
-            className="text-white hover:text-blue-300 flex items-center gap-2 font-bold transition-colors shrink-0"
+            className="text-white hover:text-blue-300 flex items-center gap-2 font-bold transition-colors shrink-0 text-sm md:text-base"
           >
-            <span className="text-2xl">&larr;</span> Home
+            <span className="text-xl md:text-2xl">&larr;</span> <span className="hidden sm:inline">Home</span>
           </button>
 
-          <div className="flex-1 w-full bg-black/40 border border-white/20 rounded-3xl p-2 flex flex-wrap md:flex-nowrap items-center gap-2">
+          <div className="flex-1 w-full bg-black/40 border border-white/20 rounded-2xl md:rounded-3xl p-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
             <div
-              className="flex-1 min-w-[130px] px-3 py-2 border-r border-white/10 relative"
+              className="flex-1 min-w-full sm:min-w-[130px] px-3 py-2 sm:border-r border-white/10 relative"
               onClick={(e) => e.stopPropagation()}
             >
               <label className="text-[10px] uppercase text-blue-300 font-black tracking-widest block">
@@ -140,7 +140,7 @@ function Search() {
                   setFromOpen((open) => !open);
                   setToOpen(false);
                 }}
-                className="w-full text-left text-white font-semibold text-sm outline-none truncate"
+                className="w-full text-left text-white font-semibold text-xs sm:text-sm outline-none truncate"
               >
                 {from ? (
                   `${airportOptions.find((option) => option.iata === from)?.city} (${from})`
@@ -149,7 +149,7 @@ function Search() {
                 )}
               </button>
               {fromOpen && airportOptions.length > 0 && (
-                <div className="absolute top-full left-0 w-56 bg-slate-900 border border-white/20 z-50 rounded-2xl mt-2 shadow-2xl overflow-y-auto max-h-48">
+                <div className="absolute top-full left-0 right-0 sm:w-56 bg-slate-900 border border-white/20 z-50 rounded-2xl mt-2 shadow-2xl overflow-y-auto max-h-48">
                   {airportOptions.map((option) => (
                     <div
                       key={option.iata}
@@ -170,7 +170,7 @@ function Search() {
             </div>
 
             <div
-              className="flex-1 min-w-[130px] px-3 py-2 border-r border-white/10 relative"
+              className="flex-1 min-w-full sm:min-w-[130px] px-3 py-2 sm:border-r border-white/10 relative"
               onClick={(e) => e.stopPropagation()}
             >
               <label className="text-[10px] uppercase text-blue-300 font-black tracking-widest block">
@@ -181,7 +181,7 @@ function Search() {
                   setToOpen((open) => !open);
                   setFromOpen(false);
                 }}
-                className="w-full text-left text-white font-semibold text-sm outline-none truncate"
+                className="w-full text-left text-white font-semibold text-xs sm:text-sm outline-none truncate"
               >
                 {to ? (
                   `${airportOptions.find((option) => option.iata === to)?.city} (${to})`
@@ -190,7 +190,7 @@ function Search() {
                 )}
               </button>
               {toOpen && airportOptions.length > 0 && (
-                <div className="absolute top-full left-0 w-56 bg-slate-900 border border-white/20 z-50 rounded-2xl mt-2 shadow-2xl overflow-y-auto max-h-48">
+                <div className="absolute top-full left-0 right-0 sm:w-56 bg-slate-900 border border-white/20 z-50 rounded-2xl mt-2 shadow-2xl overflow-y-auto max-h-48">
                   {airportOptions.map((option) => (
                     <div
                       key={option.iata}
@@ -210,7 +210,7 @@ function Search() {
               )}
             </div>
 
-            <div className="flex-1 min-w-[130px] px-3 py-2 border-r border-white/10">
+            <div className="flex-1 min-w-full sm:min-w-[130px] px-3 py-2 sm:border-r border-white/10">
               <label className="text-[10px] uppercase text-blue-300 font-black tracking-widest block">
                 Date
               </label>
@@ -218,33 +218,35 @@ function Search() {
                 type="date"
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
-                className="bg-transparent text-white w-full outline-none font-semibold text-sm [color-scheme:dark]"
+                className="bg-transparent text-white w-full outline-none font-semibold text-xs sm:text-sm [color-scheme:dark]"
               />
             </div>
 
-            <button
-              onClick={handleSearch}
-              className="bg-blue-600 hover:bg-blue-500 active:scale-95 px-5 py-3 rounded-2xl text-white font-black text-sm shadow-lg transition-all shrink-0"
-            >
-              Search
-            </button>
-
-            {(from || to || date) && (
+            <div className="flex gap-2 w-full sm:w-auto">
               <button
-                onClick={handleClear}
-                className="text-white/50 hover:text-red-400 text-sm px-3 transition-colors shrink-0"
+                onClick={handleSearch}
+                className="flex-1 sm:flex-none bg-blue-600 hover:bg-blue-500 active:scale-95 px-3 sm:px-5 py-2 sm:py-3 rounded-xl sm:rounded-2xl text-white font-black text-xs sm:text-sm shadow-lg transition-all shrink-0"
               >
-                Clear
+                Search
               </button>
-            )}
+
+              {(from || to || date) && (
+                <button
+                  onClick={handleClear}
+                  className="text-white/50 hover:text-red-400 text-xs sm:text-sm px-2 sm:px-3 transition-colors shrink-0"
+                >
+                  Clear
+                </button>
+              )}
+            </div>
           </div>
         </div>
 
-        <div className="flex justify-between items-center mb-4 border-b border-white/20 pb-3 shrink-0">
-          <h2 className="text-white text-2xl font-black tracking-tight">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-4 border-b border-white/20 pb-3 shrink-0">
+          <h2 className="text-white text-lg sm:text-2xl font-black tracking-tight">
             Available Flights
           </h2>
-          <span className="text-blue-300 font-mono font-bold bg-blue-900/30 px-3 py-1 rounded-lg text-sm">
+          <span className="text-blue-300 font-mono font-bold bg-blue-900/30 px-3 py-1 rounded-lg text-xs sm:text-sm">
             {loading || searching
               ? "loading..."
               : `${displayed.length} flight${displayed.length !== 1 ? "s" : ""}`}

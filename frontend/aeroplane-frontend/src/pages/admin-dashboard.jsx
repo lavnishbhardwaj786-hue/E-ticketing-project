@@ -94,7 +94,7 @@ function AdminDashboard() {
     >
       <div className="absolute inset-0 bg-black/50 pointer-events-none" />
 
-      <div className="w-full max-w-6xl mt-4 mb-4 bg-black/20 backdrop-blur-2xl border border-white/20 rounded-[40px] shadow-2xl p-6 md:p-8 relative z-10">
+      <div className="w-full max-w-6xl mt-4 mb-4 bg-black/20 backdrop-blur-2xl border border-white/20 rounded-[40px] shadow-2xl p-6 md:p-4 sm:p-8 relative z-10">
 
         {/* Header */}
         <div className="flex items-center gap-4 mb-6">
@@ -137,7 +137,7 @@ function AdminDashboard() {
                 <div className="bg-black/30 border border-white/10 rounded-2xl p-6">
                   <h2 className="text-white font-black text-xl mb-4">Create New Flight</h2>
                   <form onSubmit={handleCreateFlight} className="space-y-4">
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <input
                         type="text"
                         placeholder="Flight Number"
@@ -224,7 +224,7 @@ function AdminDashboard() {
                 <div className="bg-black/30 border border-white/10 rounded-2xl p-6">
                   <h2 className="text-white font-black text-xl mb-4">Create New Airline</h2>
                   <form onSubmit={handleCreateAirline} className="space-y-4">
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <input
                         type="text"
                         placeholder="Airline Name"

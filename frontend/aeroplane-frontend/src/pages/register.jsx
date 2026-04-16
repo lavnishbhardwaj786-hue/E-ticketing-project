@@ -31,7 +31,7 @@ function Register() {
       className="min-h-screen flex items-center justify-center bg-cover bg-center"
       style={{ backgroundImage: `url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=2074')` }}
     >
-      <div className="bg-white/20 backdrop-blur-lg p-8 rounded-2xl border border-white/30 w-96">
+      <div className="bg-white/20 backdrop-blur-lg p-8 rounded-2xl border border-white/30 w-full max-w-96 mx-4">
         <h2 className="text-3xl font-bold text-white mb-6">Register</h2>
         {error && <p className="text-red-300 mb-4">{error}</p>}
         <form onSubmit={handleSubmit}>

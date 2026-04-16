@@ -130,7 +130,7 @@ function Booking() {
   if (successList.length > 0) {
     return (
       <div
-        className="h-screen w-screen overflow-hidden bg-cover bg-center flex items-center justify-center relative"
+        className="min-h-screen w-screen overflow-x-hidden bg-cover bg-center flex items-center justify-center relative"
         style={{ backgroundImage: `url(${bg})` }}
       >
         <div className="absolute inset-0 bg-black/50 pointer-events-none" />
@@ -181,12 +181,12 @@ function Booking() {
 
   return (
     <div
-      className="h-screen w-screen overflow-hidden bg-cover bg-center flex justify-center items-start p-4 relative"
+      className="min-h-screen w-screen overflow-x-hidden bg-cover bg-center flex justify-center items-start p-4 relative"
       style={{ backgroundImage: `url(${bg})` }}
     >
       <div className="absolute inset-0 bg-black/40 pointer-events-none" />
 
-      <div className="w-full max-w-6xl h-full mt-4 mb-4 bg-black/20 backdrop-blur-2xl border border-white/20 rounded-[40px] shadow-2xl p-6 md:p-8 flex flex-col relative z-10 overflow-hidden">
+      <div className="w-full max-w-6xl max-h-[calc(100vh-32px)] mt-4 mb-4 bg-black/20 backdrop-blur-2xl border border-white/20 rounded-[40px] shadow-2xl p-6 md:p-8 flex flex-col relative z-10 overflow-hidden">
 
         {/* Header */}
         <div className="flex items-center gap-4 mb-5 shrink-0">
@@ -223,7 +223,7 @@ function Booking() {
             Loading seat map...
           </div>
         ) : (
-          <div className="flex-1 min-h-0 flex flex-col md:flex-row gap-5 overflow-hidden">
+          <div className="flex-1 min-h-0 flex flex-col lg:flex-row gap-5 overflow-hidden">
 
             {/* ── LEFT: Seat Map ── */}
             <div className="md:w-1/2 flex flex-col overflow-hidden">

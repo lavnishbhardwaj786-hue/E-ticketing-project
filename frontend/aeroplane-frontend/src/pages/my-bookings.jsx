@@ -51,7 +51,7 @@ function MyBookings() {
 
   return (
     <div
-      className="h-screen w-screen overflow-hidden bg-cover bg-center flex justify-center items-start p-4 relative"
+      className="min-h-screen w-screen overflow-x-hidden bg-cover bg-center flex justify-center items-start p-4 relative"
       style={{ backgroundImage: `url(${bg})` }}
     >
       <div className="absolute inset-0 bg-black/50 pointer-events-none" />
@@ -141,7 +141,7 @@ function MyBookings() {
                 </div>
 
                 {/* Details grid */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm border-t border-white/10 pt-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-sm border-t border-white/10 pt-4">
                   <div>
                     <p className="text-white/40 text-xs uppercase tracking-wider mb-1">Seat</p>
                     <p className="font-bold">{b.seat_number ?? "—"}</p>

@@ -14,7 +14,7 @@ const destinations = [
 function Home() {
   return (
     <div
-      className="h-screen w-screen overflow-hidden bg-cover bg-center flex items-center justify-center relative"
+      className="min-h-screen w-screen bg-cover bg-center flex items-center justify-center relative overflow-x-hidden"
       style={{ backgroundImage: `url(${bg})` }}
     >
       <style>{`
@@ -76,6 +76,11 @@ function Home() {
           background-clip: text;
           animation: shimmer 4s linear infinite;
         }
+        @media (max-width: 768px) {
+          .glow-orb-1 { width: 250px !important; height: 250px !important; }
+          .glow-orb-2 { width: 180px !important; height: 180px !important; }
+          .glow-orb-3 { width: 120px !important; height: 120px !important; }
+        }
       `}</style>
 
       {/* ── Layered overlays ── */}
@@ -91,15 +96,15 @@ function Home() {
         }}
       />
 
-      {/* ── Floating glow orbs ── */}
-      <div className="absolute w-[500px] h-[500px] rounded-full pointer-events-none"
+      {/* ── Floating glow orbs (hidden on mobile) ── */}
+      <div className="glow-orb-1 absolute w-[500px] h-[500px] rounded-full pointer-events-none hidden md:block"
         style={{ top: "10%", left: "5%", background: "radial-gradient(circle, rgba(59,130,246,0.12) 0%, transparent 70%)", animation: "float1 9s ease-in-out infinite" }} />
-      <div className="absolute w-[350px] h-[350px] rounded-full pointer-events-none"
+      <div className="glow-orb-2 absolute w-[350px] h-[350px] rounded-full pointer-events-none hidden md:block"
         style={{ bottom: "5%", right: "8%", background: "radial-gradient(circle, rgba(96,165,250,0.10) 0%, transparent 70%)", animation: "float2 11s ease-in-out infinite" }} />
-      <div className="absolute w-[200px] h-[200px] rounded-full pointer-events-none"
+      <div className="glow-orb-3 absolute w-[200px] h-[200px] rounded-full pointer-events-none hidden lg:block"
         style={{ top: "40%", right: "20%", background: "radial-gradient(circle, rgba(147,197,253,0.08) 0%, transparent 70%)", animation: "float3 7s ease-in-out infinite" }} />
 
-      {/* ── Floating destination tags ── */}
+      {/* ── Floating destination tags (hidden on mobile) ── */}
       {destinations.map((d, i) => {
         const positions = [
           { top: "12%", left: "3%" },
@@ -133,13 +138,14 @@ function Home() {
 
       {/* ── Main card ── */}
       <div
-        className="relative z-10 w-full mx-6 flex flex-col overflow-hidden"
+        className="relative z-10 w-full mx-3 sm:mx-6 flex flex-col overflow-hidden"
         style={{
           maxWidth: "1100px",
-          height: "min(640px, calc(100vh - 48px))",
+          minHeight: "auto",
+          maxHeight: "calc(100vh - 24px)",
           background: "linear-gradient(135deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.03) 100%)",
           backdropFilter: "blur(20px)",
-          borderRadius: "28px",
+          borderRadius: "20px sm:rounded-[28px]",
           border: "1px solid rgba(255,255,255,0.12)",
           boxShadow: "0 0 0 1px rgba(255,255,255,0.04), 0 32px 80px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.12)",
         }}
@@ -148,14 +154,14 @@ function Home() {
         <div style={{ height: "1px", background: "linear-gradient(90deg, transparent 0%, rgba(96,165,250,0.8) 40%, rgba(167,139,250,0.6) 60%, transparent 100%)" }} />
 
         {/* Navbar */}
-        <div className="px-8 pt-5" style={{ opacity: 0, animation: "fadeUp 0.5s ease 0.05s forwards" }}>
+        <div className="px-4 sm:px-8 pt-3 sm:pt-5" style={{ opacity: 0, animation: "fadeUp 0.5s ease 0.05s forwards" }}>
           <Navbar />
         </div>
 
         {/* ── Body ── */}
-        <div className="flex-1 flex min-h-0">
+        <div className="flex-1 flex flex-col lg:flex-row min-h-0">
 
-          {/* Left stats panel */}
+          {/* Left stats panel - hidden on mobile */}
           <div className="hidden lg:flex flex-col justify-between py-8 px-7 border-r"
             style={{ minWidth: "175px", borderColor: "rgba(255,255,255,0.08)" }}>
 
@@ -188,87 +194,66 @@ function Home() {
           </div>
 
           {/* Main content */}
-          <div className="flex-1 flex flex-col justify-between p-8 relative overflow-hidden">
+          <div className="flex-1 flex flex-col justify-between p-4 sm:p-8 relative overflow-hidden">
 
-            {/* Giant watermark ✈ */}
+            {/* Giant watermark ✈ (smaller on mobile) */}
             <div className="absolute pointer-events-none select-none"
-              style={{ fontSize: "280px", lineHeight: 1, right: "-20px", bottom: "-40px", color: "rgba(255,255,255,0.025)", fontWeight: 900 }}>
+              style={{ fontSize: "clamp(120px, 30vw, 280px)", lineHeight: 1, right: "-20px", bottom: "-40px", color: "rgba(255,255,255,0.025)", fontWeight: 900 }}>
               ✈
             </div>
 
-            {/* Corner orbit decoration */}
-            <div className="absolute top-6 right-6 pointer-events-none" style={{ width: "60px", height: "60px" }}>
-              <div className="absolute inset-0 rounded-full border border-white/8" />
-              <div className="absolute inset-3 rounded-full border border-blue-400/15" />
-              <div className="absolute w-2 h-2 rounded-full bg-blue-400/60"
-                style={{ top: "50%", left: "50%", marginTop: "-4px", marginLeft: "-4px", animation: "orbitDot 4s linear infinite" }} />
+            {/* Corner orbit decoration (hidden on mobile) */}
+            <div className="absolute top-6 right-6 pointer-events-none hidden md:block" style={{ width: "60px", height: "60px" }}>
+              <div className="absolute w-full h-full rounded-full border border-blue-400/20" style={{ animation: "orbitDot 6s linear infinite" }}>
+                <div className="absolute w-2 h-2 rounded-full bg-blue-400" style={{ top: "-4px", left: "50%", transform: "translateX(-50%)" }} />
+              </div>
             </div>
 
-            {/* Hero text */}
-            <div className="text-right" style={{ opacity: 0, animation: "fadeUp 0.65s ease 0.15s forwards" }}>
-              <div className="flex items-center justify-end gap-3 mb-3">
-                <div style={{ height: "1px", width: "40px", background: "linear-gradient(90deg, transparent, rgba(96,165,250,0.8))" }} />
-                <span className="text-xs uppercase font-bold tracking-[0.2em]" style={{ color: "rgba(96,165,250,0.9)" }}>
-                  Premium Flight Booking
-                </span>
+            {/* Top section: Headline + CTA */}
+            <div className="relative z-20 space-y-4 sm:space-y-6">
+              <div style={{ opacity: 0, animation: "fadeUp 0.6s ease 0.1s forwards" }}>
+                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-tight">
+                  <span className="shimmer-text">Fly Smarter,</span>
+                  <br />
+                  <span className="text-white">Travel Better</span>
+                </h1>
               </div>
 
-              <h1 className="font-black leading-[0.95] mb-4 shimmer-text"
-                style={{ fontSize: "clamp(2.4rem, 4.5vw, 3.8rem)", letterSpacing: "-0.03em" }}>
-                your ticket to<br />
-                explore the world
-              </h1>
-
-              <p className="text-sm leading-relaxed ml-auto max-w-xs"
-                style={{ color: "rgba(255,255,255,0.5)" }}>
-                Discover the world at your fingertips — hundreds of routes, real-time seats, instant confirmation.
+              <p className="text-sm sm:text-base text-white/60 max-w-md" style={{ opacity: 0, animation: "fadeUp 0.6s ease 0.2s forwards" }}>
+                Book flights across 180+ destinations with 50+ airlines. Real-time seat selection, instant confirmations, and 24/7 support.
               </p>
 
-              {/* Trust chips */}
-              <div className="flex items-center justify-end gap-2 mt-4">
-                {["✓ No hidden fees", "✓ Instant tickets", "✓ 180+ routes"].map((t, i) => (
-                  <span key={t}
-                    className="text-xs px-2.5 py-1 rounded-full border"
-                    style={{
-                      color: "rgba(147,197,253,0.9)",
-                      borderColor: "rgba(96,165,250,0.2)",
-                      background: "rgba(59,130,246,0.08)",
-                      opacity: 0,
-                      animation: `fadeUp 0.4s ease ${0.5 + i * 0.1}s forwards`
-                    }}>
-                    {t}
-                  </span>
-                ))}
+              <div style={{ opacity: 0, animation: "fadeUp 0.6s ease 0.3s forwards" }}>
+                <Firstpageelement />
               </div>
             </div>
 
-            {/* Search bar */}
-            <div style={{ opacity: 0, animation: "fadeUp 0.65s ease 0.4s forwards" }}>
-              <Firstpageelement />
+            {/* Bottom section: Stats (mobile-friendly) */}
+            <div className="lg:hidden grid grid-cols-3 gap-3 sm:gap-4 relative z-20">
+              {[
+                { n: "180+", l: "Destinations" },
+                { n: "50+",  l: "Airlines" },
+                { n: "24/7", l: "Support" },
+              ].map((s, i) => (
+                <div key={s.l} className="text-center" style={{ opacity: 0, animation: `fadeUp 0.55s ease ${0.25 + i * 0.12}s forwards` }}>
+                  <p className="font-black text-lg sm:text-2xl leading-none"
+                    style={{ background: "linear-gradient(135deg,#fff,#93c5fd)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+                    {s.n}
+                  </p>
+                  <p className="text-xs uppercase tracking-widest mt-1" style={{ color: "rgba(255,255,255,0.35)" }}>{s.l}</p>
+                </div>
+              ))}
             </div>
           </div>
-        </div>
-
-        {/* Bottom bar */}
-        <div className="px-8 py-2.5 flex items-center justify-between"
-          style={{ borderTop: "1px solid rgba(255,255,255,0.06)", opacity: 0, animation: "fadeIn 0.6s ease 0.8s forwards" }}>
-          <div className="flex items-center gap-5">
-            {["Dubai", "Tokyo", "Paris", "New York", "Sydney"].map((city, i) => (
-              <span key={city} className="text-xs"
-                style={{
-                  color: "rgba(255,255,255,0.25)",
-                  opacity: 0,
-                  animation: `fadeIn 0.4s ease ${1 + i * 0.08}s forwards`
-                }}>
-                {city}
-              </span>
-            ))}
-          </div>
-          <p className="text-xs" style={{ color: "rgba(255,255,255,0.18)" }}>AeroBook © 2024</p>
         </div>
 
         {/* Bottom shimmer line */}
-        <div style={{ height: "1px", background: "linear-gradient(90deg, transparent 0%, rgba(167,139,250,0.5) 50%, transparent 100%)" }} />
+        <div style={{ height: "1px", background: "linear-gradient(90deg, transparent 0%, rgba(96,165,250,0.8) 40%, rgba(167,139,250,0.6) 60%, transparent 100%)" }} />
+      </div>
+
+      {/* Footer text */}
+      <div className="absolute bottom-2 sm:bottom-4 left-0 right-0 text-center text-xs sm:text-sm text-white/30">
+        <p>✈️ Your journey starts here</p>
       </div>
     </div>
   )

@@ -14,12 +14,12 @@ function Features() {
   const navigate = useNavigate()
   return (
     <div
-      className="h-screen w-screen overflow-hidden bg-cover bg-center flex items-center justify-center relative"
+      className="min-h-screen w-screen overflow-hidden bg-cover bg-center flex items-center justify-center relative"
       style={{ backgroundImage: `url(${bg})` }}
     >
       <div className="absolute inset-0 bg-black/55" />
 
-      <div className="relative z-10 w-full max-w-3xl mx-4 bg-black/30 backdrop-blur-2xl border border-white/20 rounded-3xl p-8 text-white flex flex-col max-h-[90vh] overflow-y-auto">
+      <div className="relative z-10 w-full w-full max-w-3xl mx-4 mx-4 bg-black/30 backdrop-blur-2xl border border-white/20 rounded-3xl p-8 text-white flex flex-col max-h-[90vh] overflow-y-auto">
 
         <button onClick={() => navigate(-1)} className="text-white/50 hover:text-white mb-5 flex items-center gap-2 transition-colors text-sm self-start">
           ← Back
@@ -31,7 +31,7 @@ function Features() {
           <p className="text-white/50 text-sm">Everything you need to book your perfect flight</p>
         </div>
 
-        <div className="grid grid-cols-2 gap-3 mb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
           {features.map(f => (
             <div key={f.title} className="bg-white/10 hover:bg-white/15 border border-white/10 rounded-2xl p-4 transition-all">
               <p className="text-2xl mb-2">{f.icon}</p>
