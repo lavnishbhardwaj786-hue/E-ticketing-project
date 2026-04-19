@@ -34,14 +34,14 @@ function Login() {
             placeholder="Username"
             value={formdata.username}
             onChange={(e) => setformdata({...formdata, username: e.target.value})}
-            className="w-full p-3 mb-4 rounded-lg bg-white/10 border border-white/30 text-white placeholder-white/60"
+            className="w-full p-3 mb-4 rounded-lg bg-slate-900/60 border border-white/30 text-white placeholder-white/50 focus:border-blue-500 focus:bg-slate-900/80 focus:ring-1 focus:ring-blue-500/20 outline-none transition-all"
           />
           <input
             type="password"
             placeholder="Password"
             value={formdata.password}
             onChange={(e) => setformdata({...formdata, password: e.target.value})}
-            className="w-full p-3 mb-6 rounded-lg bg-white/10 border border-white/30 text-white placeholder-white/60"
+            className="w-full p-3 mb-6 rounded-lg bg-slate-900/60 border border-white/30 text-white placeholder-white/50 focus:border-blue-500 focus:bg-slate-900/80 focus:ring-1 focus:ring-blue-500/20 outline-none transition-all"
           />
           <button className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700">
             Login

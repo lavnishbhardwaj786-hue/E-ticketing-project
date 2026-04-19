@@ -140,7 +140,7 @@ function Search() {
                   setFromOpen((open) => !open);
                   setToOpen(false);
                 }}
-                className="w-full text-left text-white font-semibold text-xs sm:text-sm outline-none truncate"
+                className="w-full text-left text-white font-semibold text-xs sm:text-sm outline-none truncate bg-slate-900/40 px-2 py-1 rounded hover:bg-slate-900/60 transition-colors"
               >
                 {from ? (
                   `${airportOptions.find((option) => option.iata === from)?.city} (${from})`
@@ -181,7 +181,7 @@ function Search() {
                   setToOpen((open) => !open);
                   setFromOpen(false);
                 }}
-                className="w-full text-left text-white font-semibold text-xs sm:text-sm outline-none truncate"
+                className="w-full text-left text-white font-semibold text-xs sm:text-sm outline-none truncate bg-slate-900/40 px-2 py-1 rounded hover:bg-slate-900/60 transition-colors"
               >
                 {to ? (
                   `${airportOptions.find((option) => option.iata === to)?.city} (${to})`
@@ -218,7 +218,7 @@ function Search() {
                 type="date"
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
-                className="bg-transparent text-white w-full outline-none font-semibold text-xs sm:text-sm [color-scheme:dark]"
+                className="bg-slate-900/60 text-white w-full outline-none font-semibold text-xs sm:text-sm [color-scheme:dark] border border-white/20 rounded px-2 py-1 focus:border-blue-500 focus:bg-slate-900/80 transition-all"
               />
             </div>
 

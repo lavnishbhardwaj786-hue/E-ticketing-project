@@ -224,6 +224,30 @@ select {
   font-size: 16px;
   padding: 0.75rem;
   border-radius: 8px;
+  background-color: rgba(15, 23, 42, 0.8);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="date"]:focus,
+textarea:focus,
+select:focus {
+  background-color: rgba(15, 23, 42, 0.95);
+  color: #ffffff;
+  border-color: rgba(59, 130, 246, 0.5);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+input[type="text"]::placeholder,
+input[type="email"]::placeholder,
+input[type="password"]::placeholder,
+textarea::placeholder {
+  color: rgba(255, 255, 255, 0.4);
 }
 
 @media (max-width: 640px) {
@@ -235,6 +259,8 @@ select {
   select {
     padding: 0.875rem;
     font-size: 16px;
+    background-color: rgba(15, 23, 42, 0.8);
+    color: #ffffff;
   }
 }
 

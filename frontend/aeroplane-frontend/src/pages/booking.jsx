@@ -324,14 +324,14 @@ function Booking() {
                     placeholder={f.placeholder}
                     value={form[f.name]}
                     onChange={handleInput}
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm placeholder:text-white/30 outline-none focus:border-blue-400 transition-colors"
+                    className="w-full bg-slate-900/60 border border-white/20 rounded-xl px-4 py-2.5 text-white text-sm placeholder:text-white/40 outline-none focus:border-blue-500 focus:bg-slate-900/80 focus:ring-1 focus:ring-blue-500/20 transition-all"
                   />
                 ))}
                 <select
                   name="passenger_id_type"
                   value={form.passenger_id_type}
                   onChange={handleInput}
-                  className="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm outline-none focus:border-blue-400 transition-colors"
+                  className="w-full bg-slate-900/60 border border-white/20 rounded-xl px-4 py-2.5 text-white text-sm outline-none focus:border-blue-500 focus:bg-slate-900/80 focus:ring-1 focus:ring-blue-500/20 transition-all"
                 >
                   <option value="passport">Passport</option>
                   <option value="national_id">National ID</option>
@@ -349,7 +349,7 @@ function Booking() {
                   value={form.card_number}
                   onChange={handleInput}
                   maxLength={19}
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm placeholder:text-white/30 outline-none focus:border-blue-400 transition-colors"
+                  className="w-full bg-slate-900/60 border border-white/20 rounded-xl px-4 py-2.5 text-white text-sm placeholder:text-white/40 outline-none focus:border-blue-500 focus:bg-slate-900/80 focus:ring-1 focus:ring-blue-500/20 transition-all"
                 />
                 <div className="flex gap-3">
                   <input
@@ -359,7 +359,7 @@ function Booking() {
                     value={form.card_expiry}
                     onChange={handleInput}
                     maxLength={5}
-                    className="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm placeholder:text-white/30 outline-none focus:border-blue-400 transition-colors"
+                    className="flex-1 bg-slate-900/60 border border-white/20 rounded-xl px-4 py-2.5 text-white text-sm placeholder:text-white/40 outline-none focus:border-blue-500 focus:bg-slate-900/80 focus:ring-1 focus:ring-blue-500/20 transition-all"
                   />
                   <input
                     type="text"
@@ -368,7 +368,7 @@ function Booking() {
                     value={form.card_cvv}
                     onChange={handleInput}
                     maxLength={4}
-                    className="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white text-sm placeholder:text-white/30 outline-none focus:border-blue-400 transition-colors"
+                    className="flex-1 bg-slate-900/60 border border-white/20 rounded-xl px-4 py-2.5 text-white text-sm placeholder:text-white/40 outline-none focus:border-blue-500 focus:bg-slate-900/80 focus:ring-1 focus:ring-blue-500/20 transition-all"
                   />
                 </div>
                 <p className="text-white/25 text-xs">Test card: 4111111111111111 · any future date · any CVV</p>
